@@ -38,14 +38,14 @@ namespace Ticketing.Data.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new UserMapping());
             
 
 
 
         }
-        public DbSet<User> users { get; set; }
+        
 
     }
 }

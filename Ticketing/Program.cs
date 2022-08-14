@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using Ticketing.Core;
+using Ticketing.Core.Entity;
 using Ticketing.Data.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ticketing.Core
+namespace Ticketing.Core.Entity
 {
-    public class User:IdentityUser
+    public class User : IdentityUser
     {
         public const string RoleAdmin = "Admin";
         public const string RoleUser = "User";

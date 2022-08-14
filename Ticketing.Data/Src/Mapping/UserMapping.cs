@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ticketing.Core;
+using Ticketing.Core.Entity;
 
 namespace Ticketing.Data.Mapping
 {
@@ -15,6 +15,7 @@ namespace Ticketing.Data.Mapping
         {
             builder.ToTable("User");
             builder.Property<string>(a => a.FullName).IsRequired().HasMaxLength(100);
+            
         }
     }
 }
