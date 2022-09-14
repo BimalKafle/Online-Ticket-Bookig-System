@@ -16,4 +16,5 @@ namespace Ticketing.Core.DTO.City
         {
             get; protected set;
         }
+    }
 }
