@@ -14,6 +14,6 @@ namespace Ticketing.Core.Repository
         public Task<User?> GetById(long Id);
         public Task<IEnumerable<User>> GetAll();
 
-        public Task Remove(User user);
+        public Task Delete(User user);
     }
 }

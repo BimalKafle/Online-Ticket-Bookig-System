@@ -3,31 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Ticketing.Core.DTO.City;
+using Ticketing.Core.Entity;
+using Ticketing.Core.Exception.City;
+using Ticketing.Core.Helper;
+using Ticketing.Core.Repository;
 using Ticketing.Core.Services.ServiceInterface;
 
 namespace Ticketing.Core.Services
 {
     public class CityService : CityServiceInterface
     {
-        public Task Activate(long Id)
+        private readonly CityRepositoryInterface cityRepositoryInterface;
+
+        public CityService(CityRepositoryInterface _cityRepositoryInterface)
         {
-            throw new NotImplementedException();
+            this.cityRepositoryInterface = _cityRepositoryInterface;
         }
 
-        public Task Create(CityInsertDto dto)
+        public async Task Activate(long Id)
         {
-            throw new NotImplementedException();
+            using TransactionScope scope = TransactionScopeHelper.GetInstance();
+            var city = await cityRepositoryInterface.GetById(Id).ConfigureAwait(false) ?? throw new CityNotFoundException();
+            city.Activate();
+            scope.Complete();
         }
 
-        public Task Deactivate(long Id)
+        public async Task Create(CityInsertDto dto)
         {
-            throw new NotImplementedException();
+            using TransactionScope scope = TransactionScopeHelper.GetInstance();
+            ValidateCity(dto.Name);
+            var city = new City(dto.Name);
+            await cityRepositoryInterface.Insert(city).ConfigureAwait(false);
+            scope.Complete();
+
+        }
+
+        public async Task Deactivate(long Id)
+        {
+            using TransactionScope scope = TransactionScopeHelper.GetInstance();
+            var city = await cityRepositoryInterface.GetById(Id).ConfigureAwait(false) ?? throw new CityNotFoundException();
+            city.Deactivate();
+            scope.Complete();
         }
 
         public Task Update(CityUpdateDto dto)
         {
             throw new NotImplementedException();
+        }
+
+        private async void ValidateCity(string name)
+        {
+            var city =await cityRepositoryInterface.GetByName(name).ConfigureAwait(false);
+            if (city != null)
+            {
+                throw new CityAlreadyExistException();
+            }
         }
     }
 }

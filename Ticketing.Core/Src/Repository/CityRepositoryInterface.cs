@@ -11,7 +11,9 @@ namespace Ticketing.Core.Repository
     {
         public Task Insert(City city);
         public Task Update(City city);
-        public Task<City> GetById(long Id);
+        public Task<City?> GetById(long Id);
         public Task<IEnumerable<City>> GetAll();
+
+        public Task<City?> GetByName(string name);
     }
 }
