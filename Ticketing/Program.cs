@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Ticketing.Core.Entity;
 using Ticketing.Data.DataAccess;
+using Ticketing.DiConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.UseDIConfiguration();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
