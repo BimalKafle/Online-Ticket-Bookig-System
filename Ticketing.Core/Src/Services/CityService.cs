@@ -33,7 +33,7 @@ namespace Ticketing.Core.Services
         public async Task Create(CityInsertDto dto)
         {
             using TransactionScope scope = TransactionScopeHelper.GetInstance();
-            ValidateCity(dto.Name);
+            Validate(dto.Name);
             var city = new City(dto.Name);
             await cityRepositoryInterface.Insert(city).ConfigureAwait(false);
             scope.Complete();
@@ -48,12 +48,17 @@ namespace Ticketing.Core.Services
             scope.Complete();
         }
 
-        public Task Update(CityUpdateDto dto)
+        public async Task Update(CityUpdateDto dto)
         {
-            throw new NotImplementedException();
+            using TransactionScope scope = TransactionScopeHelper.GetInstance();
+            var city = await cityRepositoryInterface.GetById(dto.Id).ConfigureAwait(false) ?? throw new CityNotFoundException();
+            Validate(dto.Name);
+            city.UpdateName(dto.Name);
+            await cityRepositoryInterface.Update(city);
+            scope.Complete();
         }
 
-        private async void ValidateCity(string name)
+        private async void Validate(string name)
         {
             var city =await cityRepositoryInterface.GetByName(name).ConfigureAwait(false);
             if (city != null)

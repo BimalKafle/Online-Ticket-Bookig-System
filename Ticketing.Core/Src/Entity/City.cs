@@ -38,5 +38,10 @@ namespace Ticketing.Core.Entity
         {
             return Status == Active;
         }
+
+        public void UpdateName(string _name)
+        {
+            Name = _name;
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Ticketing.Core.Repository
         public Task Insert(VehicleCategory category);
         public Task Update(VehicleCategory category);
         public Task<VehicleCategory?> GetById(long Id);
+        public Task<VehicleCategory?> GetByName(string name);
         public Task<IEnumerable<VehicleCategory>> GetAll();
     }
 }
